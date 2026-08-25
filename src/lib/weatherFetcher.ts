@@ -33,7 +33,7 @@ export async function getGeoCodes(city: string) {
 
   } catch(error) {
     console.error('Error fetching geo codes:', error);
-    throw new Error('緯度、経度の取得に失敗しました');
+    throw error;
   }
 }
 
@@ -61,7 +61,7 @@ export async function getWeatherData(lat: number, lon: number) {
     }
 
     return result.data;
-    
+
  } catch(error) {
     console.error('Error fetching weather data:', error);
     throw new Error('天気情報の取得に失敗しました');
