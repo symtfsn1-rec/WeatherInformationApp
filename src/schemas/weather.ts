@@ -6,7 +6,7 @@ export const searchSchema = z.object({
 });
 
 // 都市名から緯度経度を取得するジオコーディング用スキーマ
-export const geoResponseItemSchema = z.object({
+const geoResponseItemSchema = z.object({
   name: z.string(),
   lat: z.number(),
   lon: z.number(),
