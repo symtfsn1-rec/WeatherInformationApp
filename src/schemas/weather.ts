@@ -49,4 +49,5 @@ export const weatherResponseSchema = z.object({
     sunset: z.number(),
   }),
   name: z.string(),
+  timezone: z.number(),
 });
