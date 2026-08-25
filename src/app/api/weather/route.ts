@@ -20,20 +20,12 @@ export async function GET(request: NextRequest) {
     const weatherData = await getWeatherData(lat, lon);
     return NextResponse.json(weatherData);
   } catch(error) {
-    console.error('Error fetching weather data:', error);
+    console.error('Error in /api/weather:', error);
 
     if (error instanceof Error && error.message === '都市が見つかりませんでした') {
       return NextResponse.json({error: '都市が見つかりませんでした'}, {status: 404});
     }
 
-    if (error instanceof Error && error.message === '緯度、経度の取得に失敗しました') {
-      return NextResponse.json({error: '緯度、経度の取得に失敗しました'}, {status: 500});
-    }
-
-    if (error instanceof Error && error.message === '天気情報の取得に失敗しました') {
-      return NextResponse.json({error: '天気情報の取得に失敗しました'}, {status: 500});
-    }
-
-    return NextResponse.json({error: '予期せぬエラーが発生しました'}, {status: 500});
+   return NextResponse.json({ error: '天気情報の取得に失敗しました' }, { status: 500 });
   }
 }
