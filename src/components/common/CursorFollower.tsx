@@ -8,7 +8,7 @@ interface CursorFollowerProps {
   delayDuration?: string;
 }
 
-export default function CursorFollower({size = 30, color = 'bg-blue-300/30', delayDuration = 'duration-100'}: CursorFollowerProps) {
+export default function CursorFollower({size = 30, color = 'bg-linear-to-b from-[#66e0ff] from-5% via-[#6ec0ff] via-75%  to-[#5fa0fa]', delayDuration = 'duration-100'}: CursorFollowerProps) {
   const [position, setPosition] = useState({x: -100, y: -100});
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function CursorFollower({size = 30, color = 'bg-blue-300/30', del
 
   return (
     <div
-      className={`fixed top-0 left-0 rounded-full pointer-events-none z-500 transition-transform ease-out ${delayDuration} ${color}`}
+      className={`fixed top-0 left-0 rounded-full pointer-events-none z-50 opacity-60 transition-transform ease-out ${delayDuration} ${color}`}
       style={{
         width: `${size}px`,
         height: `${size}px`,
