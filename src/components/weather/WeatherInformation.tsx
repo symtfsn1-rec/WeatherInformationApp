@@ -1,12 +1,19 @@
 import { getGeoCodes, getWeatherData } from "@/lib/weatherFetcher";
-import { Search } from "@/types/weather";
 import { formatTime } from "@/lib/formatTime";
 import { MapPin, Droplet, Wind, CloudHail, Sun } from "lucide-react";
 import { cacheLife } from 'next/cache';
 
-export default async function WeatherInformation({ city }: Search) {
+type Props = {
+  searchParams: Promise<{ city?: string }>;
+};
+
+export default async function WeatherInformation({ searchParams }: Props) {
   'use cache';
-  cacheLife({revalidate: 3600}); // キャッシュ1時間
+  cacheLife({ revalidate: 3600 }); // キャッシュ1時間
+
+  const { city } = await searchParams;
+  if (!city) return null;
+
   try {
     const geoCodes = await getGeoCodes(city);
     if (!geoCodes) {
@@ -33,14 +40,14 @@ export default async function WeatherInformation({ city }: Search) {
     const sunsetTime = formatTime(weatherData.sys.sunset, weatherData.timezone);
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-2 md:gap-4 text-sm md:text-base text-gray-500">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 text-sm md:text-base text-gray-500">
         {/*都市、国、現在の気温、最高気温、最低気温、アイコン*/}
-        <div className="md:col-span-2 lg:col-span-4 border rounded-2xl border-gray-200 px-2 pb-2 md:px-4 md:pb-4">
+        <div className="md:col-span-2 border rounded-2xl bg-white border-gray-200 px-2 pb-2 md:px-4 md:pb-4">
           <div className="flex items-center justify-between mb-2 md:mb-4">
             <div>
-              <h2 className="text-2xl font-bold text-black">{city.toUpperCase()}</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-black">{weatherData.name}</h2>
               <div className="flex items-center text-xs">
-                <MapPin className="inline-block w-3 h-3 mr-1" />
+                <MapPin className="inline-block w-3 h-3 mr-1 text-red-500/50" />
                 <span>{weatherData.name}, {weatherData.sys.country}</span>
               </div>
             </div>
@@ -58,9 +65,9 @@ export default async function WeatherInformation({ city }: Search) {
         </div>
 
         {/*湿度、快適かどうか*/}
-        <div className="border border-gray-200 rounded-2xl p-3">
+        <div className="bg-white border border-gray-200 rounded-2xl p-3">
           <div className="flex gap-2 text-gray-500 mb-4">
-            <Droplet className="inline-block w-5 h-5" />
+            <Droplet className="inline-block w-5 h-5 text-blue-300/70"/>
             <span>湿度</span>
           </div>
           <span className="text-lg font-bold text-black">{weatherData.main.humidity}%</span>
@@ -68,9 +75,9 @@ export default async function WeatherInformation({ city }: Search) {
         </div>
 
         {/*風速、風向*/}
-        <div className="border border-gray-200 rounded-2xl p-3">
+        <div className="bg-white border border-gray-200 rounded-2xl p-3">
           <div className="flex gap-2 text-gray-500 mb-4">
-            <Wind className="inline-block w-5 h-5" />
+            <Wind className="inline-block w-5 h-5 text-green-300/70"/>
             <span>風速</span>
           </div>
           <span className="text-lg font-bold text-black">{weatherData.wind.speed} m/s</span>
@@ -78,9 +85,9 @@ export default async function WeatherInformation({ city }: Search) {
         </div>
 
         {/* 降水量（過去１時間）、雪の場合は降雪量（過去１時間）、なければ「降雨・降雪は検出されていません」*/}
-        <div className="border border-gray-200 rounded-2xl p-3">
+        <div className="bg-white border border-gray-200 rounded-2xl p-3">
           <div className="flex gap-2 text-gray-500 mb-4">
-            <CloudHail className="inline-block w-5 h-5" />
+            <CloudHail className="inline-block w-5 h-5 text-blue-500/50"/>
             <span>{rainVolume > 0 ? '降水量(過去１時間)' : snowVolume > 0 ? '降雪量(過去１時間)' : '降水量'}</span>
           </div>
           <span className="text-lg font-bold text-black">
@@ -90,9 +97,9 @@ export default async function WeatherInformation({ city }: Search) {
         </div>
 
         {/* 日の出、日の入り */}
-        <div className="border border-gray-200 rounded-2xl p-3">
+        <div className="bg-white border border-gray-200 rounded-2xl p-3">
           <div className="flex gap-2 text-gray-500 mb-4">
-            <Sun className="inline-block w-5 h-5" />
+            <Sun className="inline-block w-5 h-5 text-orange-500/50"/>
             <span>太陽（現地時間）</span>
           </div>
           <div className="flex justify-between">
