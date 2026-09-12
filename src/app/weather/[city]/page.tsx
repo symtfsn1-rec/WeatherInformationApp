@@ -37,7 +37,9 @@ export async function generateStaticParams() {
 }
 
 export default async function WeatherPage({ params }: Props) {
-  const searchParams = params.then(({ city }) => ({ city }));
+  const searchParams = params.then(({ city }) => ({ 
+    city: decodeURIComponent(city),
+  }));
 
   return (
     <div className="max-w-3xl mx-auto px-2 space-y-4 mb-24">
