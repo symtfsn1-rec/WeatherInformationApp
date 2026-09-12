@@ -7,7 +7,7 @@ export default function Header() {
       <Link
         href="/"
       >
-        <img src="favicon.svg" alt="Weather Icon" className="w-12 h-12 hover:opacity-80" />
+        <img src="/favicon.svg" alt="Weather Icon" className="w-12 h-12 hover:opacity-80" />
       </Link>
       <HeaderMenu />
     </header>
