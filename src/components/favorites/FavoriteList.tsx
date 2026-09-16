@@ -21,10 +21,10 @@ export function FavoriteList() {
   if (favorites.length === 0) {
     return (
       <div className="flex flex-col items-center mt-10">
-        <div className="flex text-red-500">
-          <p>お気に入りの都市が</p>
-          <p>登録されていません。</p>
-        </div>
+          <p className="text-red-500 text-center">
+            <span className="inline-block">お気に入りの都市が</span>
+            <span className="inline-block">登録されていません。</span>
+          </p>
         <Link href="/" className="hover:underline text-lg py-2">
           都市を検索する
         </Link>

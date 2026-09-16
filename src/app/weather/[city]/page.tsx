@@ -21,18 +21,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export async function generateStaticParams() {
   return [
-    { city: 'shibuya' },
-    { city: 'chiba' },
-    { city: 'yokohama' },
-    { city: 'sapporo' },
-    { city: 'naha' },
-    { city: 'nanba' },
-    { city: 'iwaki' },
-    { city: 'new york' },
-    { city: 'paris' },
-    { city: 'sydney' },
-    { city: 'new delhi' },
-    { city: 'rio de janeiro' },
+    { city: '渋谷' },
+    { city: '千葉' },
+    { city: '横浜' },
+    { city: '札幌' },
+    { city: '那覇' },
+    { city: '難波' },
+    { city: 'いわき' },
+    { city: 'ニューヨーク' },
+    { city: 'パリ' },
+    { city: 'シドニー' },
+    { city: 'ニューデリー' },
+    { city: 'リオデジャネイロ' },
   ];
 }
 
