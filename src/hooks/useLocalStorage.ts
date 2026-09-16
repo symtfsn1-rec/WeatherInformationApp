@@ -1,8 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 
+export type FavoriteItem = {
+  city: string;
+  country: string;
+};
+
 export function useFavorites() {
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -10,7 +15,12 @@ export function useFavorites() {
       const stored = localStorage.getItem("favorite_cities");
       if (stored) {
         try {
-          setFavorites(JSON.parse(stored));
+          const parsed = JSON.parse(stored);
+          const normalized: FavoriteItem[] = parsed.map((item: Partial<FavoriteItem>) => ({
+            city: typeof item?.city === "string" ? item.city : '',
+            country: typeof item?.country === "string" ? item.country : '',
+          }));
+          setFavorites(normalized);
         } catch (e) {
           console.error(e);
         }
@@ -29,11 +39,11 @@ export function useFavorites() {
     };
   }, []);
 
-  const toggleFavorite = (city: string) => {
-    const normalized = city.toLowerCase();
-    const updated = favorites.includes(normalized)
-      ? favorites.filter((c) => c !== normalized)
-      : [...favorites, normalized];
+  const toggleFavorite = (city: string, country: string) => {
+    const normalizedCity = city.toLowerCase();
+    const normalizedCountry = country.toLowerCase();
+    const exists = favorites.some((f) => f.city.toLowerCase() === normalizedCity);
+    const updated = exists ? favorites.filter((f) => f.city.toLowerCase() !== normalizedCity) : [...favorites, { city: normalizedCity, country: normalizedCountry }];
 
     setFavorites(updated);
     localStorage.setItem("favorite_cities", JSON.stringify(updated));

@@ -54,7 +54,7 @@ export default async function WeatherInformation({ searchParams }: Props) {
                 <span>{weatherData.name}, {weatherData.sys.country}</span>
               </div>
             </div>
-            <FavoriteButton city={weatherData.name} />
+            <FavoriteButton city={weatherData.name} country={weatherData.sys.country ?? ''} />
           </div>
 
           {/* 下段：左下に気温 / 右下にアイコン＆説明 */}
