@@ -38,7 +38,7 @@ export default function SearchForm() {
           type="text"
           value={city}
           onChange={e => setCity(e.target.value)}
-          placeholder="例：shibuya, new york, paris"
+          placeholder="例：渋谷, ロンドン, パリ, (英語も可)"
           className="w-full px-2 py-1 rounded-full text-sm md:text-base bg-white border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-900"
         />
         <button type="submit" aria-label="検索">
