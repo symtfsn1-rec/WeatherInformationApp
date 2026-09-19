@@ -1,16 +1,17 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
-import WeatherInformation from "@/components/weather/WeatherInformation";
+import WeatherSection from "@/components/weather/WeatherSection";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import WeatherSkeleton from "@/components/weather/WeatherSkeleton";
 
 type Props = {
-  params: Promise<{ city: string }>;
+  params: Promise<{ city?: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { city } = await params;
+  if (!city) return { title: '', description: '' };
+
   const decodedCity = decodeURIComponent(city);
 
   return {
@@ -19,27 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export async function generateStaticParams() {
-  return [
-    { city: '渋谷' },
-    { city: '千葉' },
-    { city: '横浜' },
-    { city: '札幌' },
-    { city: '那覇' },
-    { city: '難波' },
-    { city: 'いわき' },
-    { city: 'ニューヨーク' },
-    { city: 'パリ' },
-    { city: 'シドニー' },
-    { city: 'ニューデリー' },
-    { city: 'リオデジャネイロ' },
-  ];
-}
-
 export default async function WeatherPage({ params }: Props) {
-  const searchParams = params.then(({ city }) => ({ 
-    city: decodeURIComponent(city),
-  }));
 
   return (
     <div className="max-w-3xl mx-auto px-2 space-y-4 mb-24">
@@ -54,8 +35,8 @@ export default async function WeatherPage({ params }: Props) {
       </div>
 
       <div className="w-full p-2 md:p-4 rounded-2xl space-y-4 bg-gray-200">
-        <Suspense fallback={<WeatherSkeleton />}>
-          <WeatherInformation searchParams={searchParams} />
+        <Suspense>
+          <WeatherSection searchParams={params} />
         </Suspense>
       </div>
     </div>

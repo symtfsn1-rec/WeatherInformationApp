@@ -1,7 +1,6 @@
 import WeatherTable from "@/components/weather/WeatherTable";
 import SearchForm from "@/components/weather/SearchForm";
-import WeatherInformation from "@/components/weather/WeatherInformation";
-import WeatherSkeleton from "@/components/weather/WeatherSkeleton";
+import WeatherSection from "@/components/weather/WeatherSection";
 import {Suspense} from "react";
 
 type PageProps = {
@@ -15,8 +14,8 @@ export default function Home({searchParams}: PageProps) {
         <Suspense>
           <SearchForm />
         </Suspense>
-        <Suspense fallback={<WeatherSkeleton />}>
-          <WeatherInformation searchParams={searchParams}/>
+        <Suspense fallback={null}>
+          <WeatherSection searchParams={searchParams}/>
         </Suspense>
       </WeatherTable>
     </>
