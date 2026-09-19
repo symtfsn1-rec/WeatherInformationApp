@@ -5,15 +5,12 @@ import { cacheLife } from 'next/cache';
 import { FavoriteButton } from "../favorites/FavoriteButton";
 
 type Props = {
-  searchParams: Promise<{ city?: string }>;
+  city: string;
 };
 
-export default async function WeatherInformation({ searchParams }: Props) {
+export default async function WeatherInformation({ city }: Props) {
   'use cache';
   cacheLife({ revalidate: 3600 }); // キャッシュ1時間
-
-  const { city } = await searchParams;
-  if (!city) return null;
 
   try {
     const geoCodes = await getGeoCodes(city);
@@ -54,7 +51,7 @@ export default async function WeatherInformation({ searchParams }: Props) {
                 <span>{weatherData.name}, {weatherData.sys.country}</span>
               </div>
             </div>
-            <FavoriteButton city={weatherData.name} country={weatherData.sys.country ?? ''} />
+            <FavoriteButton city={city} country={weatherData.sys.country ?? ''} />
           </div>
 
           {/* 下段：左下に気温 / 右下にアイコン＆説明 */}

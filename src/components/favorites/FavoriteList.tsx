@@ -40,7 +40,7 @@ export function FavoriteList() {
           className="group bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-shadow flex justify-between items-center"
         >
           <Link
-            href={`/weather/${encodeURIComponent(item.city)}`}
+            href={`/weather/${item.city}`}
             className="flex-1 flex justify-between items-center pr-4"
           >
             <div>
